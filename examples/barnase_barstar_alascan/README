@@ -1,0 +1,57 @@
+Barnase-barstar alanine-scan Example
+-----------------------
+The barnase-barstar alanine-scan example requires 1 R script (barnase_barstar_alascan.r), to perform alanine-scan 
+mutagenesis, electrostatic similarity distance (ESD) clustering, and to calculate solvation free energies of 
+association. We have published an analysis similar to this example in the Journal of Non-Crystalline Solids:
+
+	Kieslich, C.A., Gorham, R.D., and Morikis, D. (2011) Is the rigid-body assumption reasonable? 
+	Insights into the effects of dynamics on the electrostatic analysis of barnase-barstar. 
+	J. Non-Cryst. Solids, 357(2): 707-716.
+	
+The script should be ran using the R environment. After opening the R environment [simply run the command R in
+the terminal] first check the working directory using the command getwd(). Then be sure to navigate to the 
+barnase_barstar_alascan directory using setwd() [eg. setwd("/Users/ckieslich/aesop-1.0.0/examples/barnase_bartstar_alascan")]. 
+The script can be executed using the command source("NAME") [eg. source("bnbs_alascan.r")].   
+
+(i)   bnbs_alascan.r  - This script performs the entire analysis, from generating PQR and electrostatic 
+potential (DX) files for alanine-scan mutants, as well as generates the ESD distance 
+matrix and performs hierarchical clustering. Only a few inputs are needing to run the analysis, and these are:
+	
+	1) pdb.name    = Name of the parent PDB file ("barnase_barstar.pdb") 
+	2) cent.on     = Root name of the PDB structure to which all calculations should be centered. This should be the
+				     same as the parent structure for alanine-scan analysis ("barnase")
+	3) chain.names = An array containing the names to be used for each chain, e.g. c("barnase","barstar")
+
+In addition to these inputs other parameters can also be changed if desired, but default parameters are supplied. The
+first parameter that may be of interest is the force field (ff argument of batch.pqr) that is used in the generation 
+of PQR files. The default for AESOP is CHARMM, since this has been optimized for electrostatic calculations. However, 
+other force fields such as AMBER and PARSE are available (for more details see: 
+http://www.poissonboltzmann.org/pdb2pqr/user-guide/using-pdb2pqr). 
+
+The next set of parameters that should be considered are the input parameters for electrostatic potential calculations
+performed by APBS. These parameters can be changed manually by changing the dime, fglen, and cglen in the apbsin.solv 
+object. Also, by default the fglen is set to the cglen, since for clustering it is preferred to have the fglen and cglen 
+to be equal. In this AESOP example the parameters are set by the function apbsin.solv(), which uses the following default 
+values for APBS keywords:     
+
+APBS Defalut Parameters (Solvated state)
+-----------------------------------------
+	lpbe
+	bcfl sdh
+	srfm smol
+	chgm spl2
+	ion 1 0.150 2.0
+	ion -1 0.150 2.0
+	pdie  20.0
+	sdie  78.54
+	sdens  10.0
+	srad  0.0
+	swin  0.3
+	temp  298.15
+	
+	For more details, regarding the possible keywords and their meaning please visit: 
+	http://www.poissonboltzmann.org/apbs/user-guide/running-apbs/input-files/elec-input-file-section/elec-keywords
+
+The ESD used in this example is LD (a.k.a AND). The outputs of this script include directories of PQR files, directories 
+of DX files, an image of the ESD dendrogram, and a R binary file (.dat file) containing all of the objects generated in 
+this AESOP analysis. This file, and therefore these objects, can be loaded for later use using the R load() function. 

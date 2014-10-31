@@ -1,0 +1,105 @@
+AESOP Clustering Framework (Aug. 16, 2013)
+-------------------------------------------
+This README file describes the contents and usage of the AESOP Clustering Framework. 
+
+Contents of AESOP_clust
+------------------------
++ README (This file)
++ aesop_description.pdf =  Theory and structure behind the AESOP framework
++ Directories
+  ------------
+  - Source = Source code for AESOP framework, plus additional utilities to aid calculations
+  	* AESOP.r    = Source code containing AESOP framework functions
+	* pdb_align_hom.r  = Utility script for superimposing protein structures containing different sequences 
+	* pdb_align.r      = Utility script for superimposing protein structures containing the same sequence
+	* chimera_images.r = Utility script for making isopotential contours
+  
+  - examples = AESOP examples
+  	+ barnase_alascan = Clustering example for alanine-scan of a single chain, barnase
+		* Results (Folder)  = Contains example output files for comparison 
+		* bn_bs.pdb         = PDB structure for the barnase-bastar complex (1BRS)
+		* barnase_alascan.r = AESOP script for performing electrostatic similarity clustering of barnase alanine-scan mutants
+
+  	+ barnase_barstar_alascan = Example for alanine-scan of a complex with clustering and solvation free energies of association
+		* Results (Folder)    = Contains example output files for comparison 
+		* barnase_barstar.pdb = PDB structure for the barnase-bastar complex (1BRS)
+		* bnbs_alascan.r      = AESOP script for performing electrostatic similarity clustering and calculating solvation free energies
+                                        of association for barnase-barstar alanine-scan mutants
+
+  	+ c3d_perturb_map = Example for perturbation map of complement C3d
+		* Results (Folder) = Contains example output files for comparison 
+		* c3d.pdb          = PDB structure for the complement C3d (1C3D)
+		* c3d_esi_dist.r   = AESOP script for generating perturbation map of 
+
+  	+ LTP_homology = Clustering example for homologous lipid transfer proteins (LTP)
+		* Results (Folder) = Contains example output files for comparison 
+		* LTP_pdb (Folder) = Contains 20 PDB structures for LTP and LTP-like proteins from Arabidopsis
+		* LTP_esd_clust.r  = AESOP script for performing electrostatic similarity clustering of LTPs  
+		* chimera_images.r = Utility script for making isopotential contours for each LTP protein
+		* pdb_align_hom.r  = Utility script for superimposing protein structures containing different sequences 
+  
+  	+ sumo_charge_reverse = Example for charge-reversal scan of SUMO4 in complex with SENP2 (clustering and free energies)
+		* Results (Folder) = Contains example output files for comparison 
+		* senp2_sumo4.pdb  = PDB file for the SENP2-SUMO4 complex (model)
+		* sumo_qrev.r      = AESOP script for performing electrostatic similarity clustering and calculating solvation 
+				     free energies of association for SENP2-SUMO4 charge-reversal scan mutants
+
+  	+ sumo_mut_comb = Example for generating combinations of mutations based on list allowed mutations for SENP2-SUMO4 (clustering and free energies)
+		* Results (Folder) = Contains example output files for comparison 
+		* senp2_sumo4.pdb  = PDB file for the SENP2-SUMO4 complex (model)
+		* sumo_mut_comb.r  = AESOP script for performing electrostatic similarity clustering and calculating solvation 
+				     free energies of association for mutation combinations
+
+  	+ c3d_mutants_list / cr2_mutants_list = Example for generating generating a list of specific mutations for C3d-CR2 (clustering and free energies)
+		* Results (Folder) = Contains example output files for comparison 
+		* c3d_cr2.pdb  = PDB file for the C3d-CR2 complex (model)
+		* c3dmuts.xls / cr2muts.xls      = Excel file for the C3d/CR2 sequence number and mutant (up to triple mutants)
+		* c3d_mut_list.r / cr2_mut_list.r  = AESOP script for performing electrostatic similarity clustering and calculating solvation 
+				     free energies of association for specified list of SUMO4 mutants
+
+
+External Software Needed for AESOP:
+-----------------------------------
+The following list of software must be installed prior to using the AESOP Framework. SCWRL4 is need for 
+non-alanine mutations. The last two programs are needed only for the chimera_images (UCSF Chimera) and 
+pdb_align_hom (MUSCLE) utilities, which have been included to aid in the visualization of results and 
+in the super-positioning of homologous protein structures. Please visit the links below and follow the 
+instructions provided by each website on how to install the programs. Where the programs are installed 
+is not of importance, however the path to MUSCLE executable must be added to the PATH environmental 
+variable. The paths to all other programs will simply be set in the AESOP scripts. At this time the AESOP 
+Framework has only been tested for UNIX platforms (Mac and Linux), since PDB2PQR is unable to installed
+on Windows. Those wishing to implement the AESOP framework on a Windows machine will need to use the 
+Cygwin environment (http://www.cygwin.com/).
+========================================================
+R for Statistical Computing - http://www.r-project.org/
+
+Bio3D - http://mccammon.ucsd.edu/~bgrant/bio3d/
+
+APBS - http://www.poissonboltzmann.org/apbs/
+
+PDB2PQR - http://www.poissonboltzmann.org/pdb2pqr/
+
+UCSF Chimera - http://www.cgl.ucsf.edu/chimera/ (Needed for chimera_images to make isopotential contours)
+
+**MUSCLE - http://www.drive5.com/muscle/ (Needed for pdb_align_hom to select atoms to be used in fitting)
+
+**  Only needed for optional utilities for structure alignment and visualization
+========================================================
+One additional R package is also needed. It can be installed
+by executing the following command while in the R environment:
+
+install.packages("stringr")
+
+
+Setup and execution of AESOP:
+-----------------------------------
+After installing the above required software, the paths of these programs must be updated in the AESOP_paths.r
+file, which can be found in the source directory. To run an AESOP script, open the R environment and navigate 
+to the correct working directory. Finally, the source command is used to execute the the AESOP script. Please 
+see the aesop_description.pdf, and the included examples for more details.
+
+
+***NOTE*** 
+To avoid potential problems, it is best to use cleaned PDB files as input, meaning only including ATOM lines.
+PDB files do not need to be renumbered, but if multiple chain are present in the PDB file, chain identifiers 
+need to be used.   
